@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "438d150b-39b5-4a68-8240-5c29ab4c59da",
+		"name": "Trazabilidad - Generador IDs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mmondani@x-28.com\",\r\n    \"password\":\"1234\",\r\n    \"level\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://us-central1-trazabilidad-generador-qr.cloudfunctions.net/api/users",
+							"protocol": "https",
+							"host": [
+								"us-central1-trazabilidad-generador-qr",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
