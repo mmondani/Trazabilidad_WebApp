@@ -8,3 +8,17 @@ export const hashPassword = (password: string) => {
 
     return salt + "$" + hash;
 };
+
+export const isPasswordCorrect = (incomingPassword, storedPassword) => {
+    let passwordFields = storedPassword.split("$");
+    let salt = passwordFields[0];
+
+    let hash = crypto.createHmac("sha256", salt)
+        .update(incomingPassword)
+        .digest("base64");
+    
+    if (hash === passwordFields[1])
+        return true;
+    else
+        return false;
+};

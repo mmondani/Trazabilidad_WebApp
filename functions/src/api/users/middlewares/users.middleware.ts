@@ -1,4 +1,24 @@
 
+export const loginValidator = (req, res, next) => {
+    let errors = [];
+
+    if (req.body) {
+        if (!req.body.email)
+            errors.push("email required");
+        if (!req.body.password)
+            errors.push("password required");
+
+        if (errors.length > 0)
+            return res.status(400).send({errors: errors});
+        else
+            return next();
+    }
+    else {
+        return res.status(400).send({errors: ["email required", "password required"]});
+    }
+};
+
+
 export const newUserValidator = (req, res, next) => {
     let errors = [];
 
