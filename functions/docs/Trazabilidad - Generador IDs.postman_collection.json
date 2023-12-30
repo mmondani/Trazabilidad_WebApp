@@ -9,8 +9,46 @@
 			"name": "users",
 			"item": [
 				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mmondani@x-28.com\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/users/login",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -23,12 +61,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://us-central1-trazabilidad-generador-qr.cloudfunctions.net/api/users",
-							"protocol": "https",
+							"raw": "{{API_URL}}/api/users",
 							"host": [
-								"us-central1-trazabilidad-generador-qr",
-								"cloudfunctions",
-								"net"
+								"{{API_URL}}"
 							],
 							"path": [
 								"api",

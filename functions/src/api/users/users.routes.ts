@@ -11,6 +11,8 @@ export default (app: express.Express, db: Firestore) => {
     ]);
 
     app.post("/users", [
+        usersMiddleware.isTokenValid,
+        usersMiddleware.isPermissionLevelFulfilled(["admin"]),
         usersMiddleware.newUserValidator,
         usersControllers.newUser(db)
     ]);

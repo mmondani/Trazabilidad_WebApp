@@ -1,3 +1,44 @@
+import * as jwt from 'jsonwebtoken';
+import * as functions from 'firebase-functions';
+
+
+export const isTokenValid = (req, res, next) => {
+    if (req.headers["authorization"]){
+        let authorization = req.headers["authorization"].split(" ");
+
+        if (authorization[0] === "Bearer") {
+            try {
+                req.token = jwt.verify(authorization[1], functions.config().jwt.key);
+
+                return next();
+            }
+            catch(err) {
+                return res.status(403).send();
+            }
+        }
+        else {
+            return res.status(401).send();
+        }
+    }
+    else{
+        return res.status(401).send();
+    }
+}
+
+
+export const isPermissionLevelFulfilled = (requiredPermissionLevels: Array<string>) => {
+    return (req, res, next) => {
+        let userPermissionLevel = req.token.level;
+
+        if (requiredPermissionLevels.includes(userPermissionLevel)) {
+            return next();
+        }
+        else{
+            return res.status(403).send();
+        }
+    };
+};
+
 
 export const loginValidator = (req, res, next) => {
     let errors = [];
