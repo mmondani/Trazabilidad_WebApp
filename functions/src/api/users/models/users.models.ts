@@ -17,3 +17,57 @@ export const userExists = async (db: Firestore, email: string) => {
         return true;
     }
 };
+
+
+export const createUser = async (db: Firestore, user: User) => {
+    let userExist = await userExists(db, user.email);
+
+    if (userExist)
+        return undefined;
+
+
+    const entry = db.collection("users").doc();
+    await entry.set(user);
+
+    return {
+        id: entry.id,
+        email: user.email,
+        level: user.level,
+        createdAt: user.createdAt
+    };
+};
+
+
+export const modifyUser = async (db: Firestore, id, params) => {
+    const userDoc = db.collection("users").doc(id);
+    const userData = await userDoc.get();
+
+    if (userData.exists) {
+        await userDoc.update(params);
+
+        return {
+            id: userData.id,
+            email: userData.get("email"),
+            level: userData.get("level"),
+            createdAt: userData.get("createdAt")
+        };
+    }
+    else {
+        return undefined;
+    }
+};
+
+
+export const deleteUser = async (db: Firestore, id) => {
+    const userDoc = db.collection("users").doc(id);
+    const userData = await userDoc.get();
+
+    if (userData.exists) {
+        await userDoc.delete();
+
+        return true;
+    }
+    else {
+        return false;
+    }
+};

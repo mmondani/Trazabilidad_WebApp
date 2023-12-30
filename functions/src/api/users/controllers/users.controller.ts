@@ -54,21 +54,12 @@ export const newUser = (db: Firestore) => {
 
         // Primero se chequea si el email ya fue registrado
         try {
-            let userExist = await usersModels.userExists(db, req.body.email);
+            let newUser = await usersModels.createUser(db, user);
 
-            if (userExist)
+            if (newUser)
+                return res.status(200).send(newUser);
+            else 
                 return res.status(409).send({message: "email address is already being used"});
-    
-            // Si no existe, se lo crea en la base de datos
-            const entry = db.collection("users").doc();
-            entry.set(user);
-
-            return res.status(200).send({
-                id: entry.id,
-                email: user.email,
-                level: user.level,
-                createdAt: user.createdAt
-            });
         }
         catch (error) {
             return res.status(500).send({message: "server internal error - " + error});
@@ -97,22 +88,12 @@ export const patchUser = (db: Firestore) => {
             params.password = hashPassword(params.password);
 
         try {
-            const userDoc = db.collection("users").doc(id);
-            const userData = await userDoc.get();
+            let modifiedUser = await usersModels.modifyUser(db, id, params);
 
-            if (userData.exists) {
-                await userDoc.update(params);
-    
-                return res.status(200).send({
-                    id: userData.id,
-                    email: userData.get("email"),
-                    level: userData.get("level"),
-                    createdAt: userData.get("createdAt")
-                });
-            }
-            else {
+            if (modifiedUser)
+                return res.status(200).send(modifiedUser);
+            else
                 return res.status(400).send({errors: ["non-existent id"]});
-            }
         }
         catch (error) {
             return res.status(500).send({message: "server internal error - " + error});
@@ -125,17 +106,12 @@ export const deleteUser = (db: Firestore) => {
     return async (req, res, next) => {
 
         try {
-            const userDoc = db.collection("users").doc(req.params.id);
-            const userData = await userDoc.get();
+            let userDeleted = await usersModels.deleteUser(db, req.params.id);
 
-            if (userData.exists) {
-                await userDoc.delete();
-
-                res.status(200).send();
-            }
-            else {
+            if (userDeleted) 
+                return res.status(200).send();
+            else
                 return res.status(400).send({errors: ["non-existent id"]});
-            }
         }
         catch (error) {
             return res.status(500).send({message: "server internal error - " + error});
