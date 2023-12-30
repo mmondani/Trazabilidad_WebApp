@@ -98,11 +98,10 @@ export const patchUser = (db: Firestore) => {
 
         try {
             const userDoc = db.collection("users").doc(id);
+            const userData = await userDoc.get();
 
-            if (userDoc) {
+            if (userData.exists) {
                 await userDoc.update(params);
-
-                const userData = await db.collection("users").doc(id).get();
     
                 return res.status(200).send({
                     id: userData.id,
@@ -110,6 +109,29 @@ export const patchUser = (db: Firestore) => {
                     level: userData.get("level"),
                     createdAt: userData.get("createdAt")
                 });
+            }
+            else {
+                return res.status(400).send({errors: ["non-existent id"]});
+            }
+        }
+        catch (error) {
+            return res.status(500).send({message: "server internal error - " + error});
+        }
+    }
+};
+
+
+export const deleteUser = (db: Firestore) => {
+    return async (req, res, next) => {
+
+        try {
+            const userDoc = db.collection("users").doc(req.params.id);
+            const userData = await userDoc.get();
+
+            if (userData.exists) {
+                await userDoc.delete();
+
+                res.status(200).send();
             }
             else {
                 return res.status(400).send({errors: ["non-existent id"]});

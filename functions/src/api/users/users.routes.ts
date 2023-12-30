@@ -23,4 +23,10 @@ export default (app: express.Express, db: Firestore) => {
         usersMiddleware.patchUserValidator,
         usersControllers.patchUser(db)
     ]);
+
+    app.delete("/users/:id", [
+        usersMiddleware.isTokenValid,
+        usersMiddleware.isPermissionLevelFulfilled(["admin"]),
+        usersControllers.deleteUser(db)
+    ]);
 };
