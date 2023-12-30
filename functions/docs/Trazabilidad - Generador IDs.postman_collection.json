@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"mmondani@x-28.com\",\r\n    \"password\":\"1234\"\r\n}",
+							"raw": "{\r\n    \"email\":\"dcangi@x-28.com\",\r\n    \"password\":\"4321\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -54,6 +54,43 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"email\":\"mmondani@x-28.com\",\r\n    \"password\":\"1234\",\r\n    \"level\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/users",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"L9si0S9C3OKbuzxKIWAk\",\r\n    \"password\": \"1234\",\r\n    \"level\": \"operator\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

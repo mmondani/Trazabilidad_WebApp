@@ -76,3 +76,47 @@ export const newUser = (db: Firestore) => {
 
     }
 };
+
+
+export const patchUser = (db: Firestore) => {
+    return async (req, res, next) => {
+        const {id, password, level} = req.body;
+
+        let params = {
+            password,
+            level
+        };
+
+        for (let prop in params) {
+            if (!params[prop])
+                delete params[prop];
+        }
+
+        // Si la propiedad password está presente, se la hashea antes de hacer el update
+        if (params.password)
+            params.password = hashPassword(params.password);
+
+        try {
+            const userDoc = db.collection("users").doc(id);
+
+            if (userDoc) {
+                await userDoc.update(params);
+
+                const userData = await db.collection("users").doc(id).get();
+    
+                return res.status(200).send({
+                    id: userData.id,
+                    email: userData.get("email"),
+                    level: userData.get("level"),
+                    createdAt: userData.get("createdAt")
+                });
+            }
+            else {
+                return res.status(400).send({errors: ["non-existent id"]});
+            }
+        }
+        catch (error) {
+            return res.status(500).send({message: "server internal error - " + error});
+        }
+    }
+};
