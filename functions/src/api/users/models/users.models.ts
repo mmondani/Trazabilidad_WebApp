@@ -19,6 +19,25 @@ export const userExists = async (db: Firestore, email: string) => {
 };
 
 
+export const getUsers = async (db: Firestore) => {
+    const usersList = await db.collection("users").get();
+    const usersListDocs = usersList.docs;
+    const users = usersListDocs.map ((doc) => {
+        let data = doc.data();
+        delete data.password;
+        
+        return {
+            id: doc.id,
+            ...data
+        };
+    });
+
+    return {
+        data: users
+    }
+};
+
+
 export const createUser = async (db: Firestore, user: User) => {
     let userExist = await userExists(db, user.email);
 

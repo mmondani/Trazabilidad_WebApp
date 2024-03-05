@@ -10,6 +10,12 @@ export default (app: express.Express, db: Firestore) => {
         usersControllers.login (db)
     ]);
 
+    app.get("/users", [
+        usersMiddleware.isTokenValid,
+        usersMiddleware.isPermissionLevelFulfilled(["admin", "operator"]),
+        usersControllers.getUsers(db)
+    ]);
+
     app.post("/users", [
         usersMiddleware.isTokenValid,
         usersMiddleware.isPermissionLevelFulfilled(["admin"]),

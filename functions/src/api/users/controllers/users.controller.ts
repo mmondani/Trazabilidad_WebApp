@@ -69,6 +69,21 @@ export const newUser = (db: Firestore) => {
 };
 
 
+export const getUsers = (db: Firestore) => {
+    return async (req, res, next) => {
+
+        try {
+            let usersList = await usersModels.getUsers(db);
+
+            return res.status(200).send(usersList);
+        }
+        catch (error) {
+            return res.status(500).send({message: "server internal error - " + error});
+        }
+    }
+};
+
+
 export const patchUser = (db: Firestore) => {
     return async (req, res, next) => {
         const {id, password, level} = req.body;
