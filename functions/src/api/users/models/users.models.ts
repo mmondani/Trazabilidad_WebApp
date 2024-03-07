@@ -63,12 +63,12 @@ export const modifyUser = async (db: Firestore, id, params) => {
 
     if (userData.exists) {
         await userDoc.update(params);
+        const modifiedUserData = await userDoc.get();
 
         return {
             id: userData.id,
-            email: userData.get("email"),
-            level: userData.get("level"),
-            createdAt: userData.get("createdAt")
+            email: modifiedUserData.get("email"),
+            level: modifiedUserData.get("level"),
         };
     }
     else {

@@ -81,7 +81,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"dcangi@x-28.com\",\r\n    \"password\":\"1234\",\r\n    \"level\":\"operator\"\r\n}",
+							"raw": "{\r\n    \"email\":\"ycastagnola@x-28.com\",\r\n    \"password\":\"1234\",\r\n    \"level\":\"operator\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -162,6 +162,142 @@
 								"api",
 								"users",
 								"1PV1EbRi4KZSAXdxnv97"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "batchs",
+			"item": [
+				{
+					"name": "get batchs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/batchs",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"batchs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create batch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"originId\":\"123456888#1235\",\r\n    \"week\":15,\r\n    \"year\":2024,\r\n    \"from\":1,\r\n    \"to\":15000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/batchs",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"batchs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify batch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"cFMvHP5HMRdWRoqddmvZ\",\r\n    \"week\": 54,\r\n    \"year\": 2023,\r\n    \"from\": 2,\r\n    \"to\": 3,\r\n    \"originId\": \"55\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/batchs",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"batchs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete batch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/batchs/cFMvHP5HMRdWRoqddmvZ",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"batchs",
+								"cFMvHP5HMRdWRoqddmvZ"
 							]
 						}
 					},
