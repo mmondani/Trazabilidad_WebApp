@@ -304,6 +304,142 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "origins",
+			"item": [
+				{
+					"name": "get origins",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/origins",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"origins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create origin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identifier\":\"K\",\r\n    \"description\":\"Arlia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/origins",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"origins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify origin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"dN5apSYH0qU7I1kAUfx6\",\r\n    \"identifier\": \"K\",\r\n    \"description\": \"Kompusur\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/origins",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"origins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete origin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/origins/whdPJDOSo0GPr9HxAysZ",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"origins",
+								"whdPJDOSo0GPr9HxAysZ"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
