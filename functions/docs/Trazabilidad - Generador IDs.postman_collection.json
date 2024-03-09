@@ -201,6 +201,44 @@
 					"response": []
 				},
 				{
+					"name": "get next from",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"originId\":\"123456888#1235\",\r\n    \"week\": 15,\r\n    \"year\": 2024\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/batchs/next_from",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"batchs",
+								"next_from"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create batch",
 					"request": {
 						"auth": {
@@ -217,7 +255,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"originId\":\"123456888#1235\",\r\n    \"week\":15,\r\n    \"year\":2024,\r\n    \"from\":1,\r\n    \"to\":15000\r\n}",
+							"raw": "{\r\n    \"originId\":\"123456888#1235\",\r\n    \"week\":15,\r\n    \"year\":2024,\r\n    \"from\":15001,\r\n    \"to\":16500\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

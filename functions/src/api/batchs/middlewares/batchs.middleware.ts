@@ -39,3 +39,21 @@ export const patchBatchValidator = (req, res, next) => {
         return res.status(400).send({errors: ["id required"]});
     }
 }
+
+
+export const nextFromValidator = (req, res, next) => {
+    let errors = [];
+
+    if (req.body) {
+        if (!req.body.originId)
+            errors.push("originId required");
+
+        if (errors.length > 0)
+            return res.status(400).send({errors: errors});
+        else
+            return next();
+    }
+    else {
+        return res.status(400).send({errors: ["originId required"]});
+    }
+}

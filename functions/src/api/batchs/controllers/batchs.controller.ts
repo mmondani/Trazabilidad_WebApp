@@ -1,5 +1,6 @@
 import { Firestore } from 'firebase-admin/firestore';
 import * as batchsModel from '../models/batchs.model'
+import { getCurrentWeekNumber } from '../../common/utilities/common.utilities';
 
 
 export const getBatchs = (db: Firestore) => {
@@ -9,6 +10,36 @@ export const getBatchs = (db: Firestore) => {
             let batchsList = await batchsModel.getBatchs(db);
 
             return res.status(200).send(batchsList);
+        }
+        catch (error) {
+            return res.status(500).send({message: "server internal error - " + error});
+        }
+    }
+};
+
+
+export const getNextFrom = (db: Firestore) => {
+    return async (req, res, next) => {
+        let {originId, week, year} = req.body;
+
+        if (!week) {
+            week = getCurrentWeekNumber();
+        }
+
+        if (!year) {
+            year = (new Date()).getFullYear();
+        }
+
+        let params = {
+            originId,
+            week,
+            year
+        };
+
+        try {
+            let nextFrom = await batchsModel.getNextFrom(db, params);
+
+            return res.status(200).send(nextFrom);
         }
         catch (error) {
             return res.status(500).send({message: "server internal error - " + error});

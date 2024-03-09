@@ -12,6 +12,13 @@ export default (app: express.Express, db: Firestore) => {
         batchsControllers.getBatchs (db)
     ]);
 
+    app.post("/batchs/next_from", [
+        usersMiddleware.isTokenValid,
+        usersMiddleware.isPermissionLevelFulfilled(["admin", "operator"]),
+        batchsMiddleware.nextFromValidator,
+        batchsControllers.getNextFrom (db)
+    ]);
+
     app.post("/batchs", [
         usersMiddleware.isTokenValid,
         usersMiddleware.isPermissionLevelFulfilled(["admin", "operator"]),

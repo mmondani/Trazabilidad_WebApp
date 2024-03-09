@@ -46,6 +46,37 @@ export const getBatchs = async (db: Firestore) => {
 };
 
 
+export const getNextFrom = async (db: Firestore, params) => {
+    let nextFrom;
+
+    const batchsList = await db.collection("batchs")
+                                    .where("originId", "==", params.originId)
+                                    .where("week", "==", params.week)
+                                    .where("year", "==", params.year)
+                                    .get();
+
+    if (batchsList.empty) {
+        nextFrom = 0;
+    }
+    else {
+        const batchsListDocs = batchsList.docs;
+
+        nextFrom = 0;
+        batchsListDocs.forEach((doc) => {
+            if (doc.get("to") > nextFrom)
+                nextFrom = doc.get("to") + 1;
+        })
+    }
+
+    return {
+        originId: params.originId,
+        week: params.week,
+        year: params.year,
+        from: nextFrom
+    };
+};
+
+
 export const createBatch = async (db: Firestore, batch: Batch) => {
     let batchExist = await batchExists(db, batch);
 
