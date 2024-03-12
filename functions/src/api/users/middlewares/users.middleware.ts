@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import * as functions from 'firebase-functions';
-
+import { TokenPayload } from '../controllers/users.controller';
 
 export const isTokenValid = (req, res, next) => {
     if (req.headers["authorization"]){
@@ -28,7 +28,8 @@ export const isTokenValid = (req, res, next) => {
 
 export const isPermissionLevelFulfilled = (requiredPermissionLevels: Array<string>) => {
     return (req, res, next) => {
-        let userPermissionLevel = req.token.level;
+        let token: TokenPayload = req.token;
+        let userPermissionLevel = token.level;
 
         if (requiredPermissionLevels.includes(userPermissionLevel)) {
             return next();

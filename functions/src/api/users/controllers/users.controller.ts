@@ -3,6 +3,13 @@ import { Firestore } from 'firebase-admin/firestore';
 import * as usersModels from '../models/users.models'
 import * as jwt from 'jsonwebtoken';
 import * as functions from 'firebase-functions';
+import * as logsModel from '../../logs/models/logs.model';
+
+export type TokenPayload = {
+    email: string,
+    userId: string,
+    level: string
+};
 
 export const login = (db:Firestore) => {
     return async (req, res, next) => {
@@ -19,6 +26,7 @@ export const login = (db:Firestore) => {
                 if (isPasswordCorrect(password, user.get("password"))) {
                     const token = jwt.sign({
                             email: user.get("email"),
+                            userId: user.id,
                             level: user.get("level")
                         },
                         functions.config().jwt.key,
@@ -56,8 +64,14 @@ export const newUser = (db: Firestore) => {
         try {
             let newUser = await usersModels.createUser(db, user);
 
-            if (newUser)
+            if (newUser) {
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logsModel.users_newUserMessage(newUser.email, newUser.level));
+
                 return res.status(200).send(newUser);
+            }
             else 
                 return res.status(409).send({message: "email address is already being used"});
         }
