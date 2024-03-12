@@ -1,6 +1,9 @@
 import { Firestore } from 'firebase-admin/firestore';
 import * as batchsModel from '../models/batchs.model'
 import { getCurrentWeekNumber } from '../../common/utilities/common.utilities';
+import * as logsModel from '../../logs/models/logs.model';
+import { TokenPayload } from '../../users/controllers/users.controller';
+import { getOriginsById } from '../../origins/models/origins.model';
 
 
 export const getBatchs = (db: Firestore) => {
@@ -64,8 +67,16 @@ export const newBatch = (db: Firestore) => {
         try {
             let newBatch = await batchsModel.createBatch(db, batch);
 
-            if (newBatch)
+            if (newBatch) {
+                let origin = await getOriginsById(db, newBatch.originId);
+                let logMessage = await logsModel.batchs_newBatchMessage(newBatch, origin);
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logMessage);
+
                 return res.status(200).send(newBatch);
+            }
             else 
                 return res.status(409).send({message: "batch already exists"});
         }
@@ -95,10 +106,19 @@ export const patchBatch = (db: Firestore) => {
         }
 
         try {
+            let originalBatch = await batchsModel.getBatchById(db, id);
             let modifiedBatch = await batchsModel.modifyBatch(db, id, params);
 
-            if (modifiedBatch)
+            if (modifiedBatch) {
+                let origin = await getOriginsById(db, originalBatch.originId);
+                let logMessage = await logsModel.batchs_modifyBatchMessage(originalBatch, origin, params);
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logMessage);
+
                 return res.status(200).send(modifiedBatch);
+            }
             else
                 return res.status(400).send({errors: ["non-existent id"]});
         }
@@ -113,10 +133,18 @@ export const deleteBatch = (db: Firestore) => {
     return async (req, res, next) => {
 
         try {
-            let batchDeleted = await batchsModel.deleteBatch(db, req.params.id);
+            let [batchDeleted, originId, week, year, from, to] = await batchsModel.deleteBatch(db, req.params.id);
 
-            if (batchDeleted) 
+            if (batchDeleted) {
+                let origin = await getOriginsById(db, originId);
+                let logMessage = await logsModel.batchs_deleteBatchMessage(origin, week, year, from, to);
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logMessage);
+
                 return res.status(200).send();
+            }
             else
                 return res.status(400).send({errors: ["non-existent id"]});
         }

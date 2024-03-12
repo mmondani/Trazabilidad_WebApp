@@ -1,5 +1,7 @@
 import { Firestore } from 'firebase-admin/firestore';
 import * as originsModel from '../models/origins.model'
+import * as logsModel from '../../logs/models/logs.model';
+import { TokenPayload } from '../../users/controllers/users.controller';
 
 
 export const getOrigins = (db: Firestore) => {
@@ -30,8 +32,14 @@ export const newOrigin = (db: Firestore) => {
         try {
             let newOrigin = await originsModel.createOrigin(db, batch);
 
-            if (newOrigin)
+            if (newOrigin) {
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logsModel.origins_newOriginMessage(newOrigin.identifier, newOrigin.description));
+
                 return res.status(200).send(newOrigin);
+            }
             else 
                 return res.status(409).send({message: "origin already exists"});
         }
@@ -60,8 +68,14 @@ export const patchOrigin = (db: Firestore) => {
         try {
             let modifiedOrigin = await originsModel.modifyOrigin(db, id, params);
 
-            if (modifiedOrigin)
+            if (modifiedOrigin) {
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logsModel.origins_modifyOriginMessage(modifiedOrigin.identifier, modifiedOrigin.description, params));
+
                 return res.status(200).send(modifiedOrigin);
+            }
             else
                 return res.status(400).send({errors: ["non-existent id"]});
         }
@@ -76,10 +90,16 @@ export const deleteOrigin = (db: Firestore) => {
     return async (req, res, next) => {
 
         try {
-            let originDeleted = await originsModel.deleteOrigin(db, req.params.id);
+            let [originDeleted, originIdentifier, originDescription] = await originsModel.deleteOrigin(db, req.params.id);
 
-            if (originDeleted) 
+            if (originDeleted) {
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logsModel.origins_deleteOriginMessage(originIdentifier, originDescription));
+
                 return res.status(200).send();
+            }
             else
                 return res.status(400).send({errors: ["non-existent id"]});
         }

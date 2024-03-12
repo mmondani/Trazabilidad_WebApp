@@ -119,8 +119,14 @@ export const patchUser = (db: Firestore) => {
         try {
             let modifiedUser = await usersModels.modifyUser(db, id, params);
 
-            if (modifiedUser)
+            if (modifiedUser) {
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logsModel.users_modifyUserMessage(modifiedUser.email, params));
+
                 return res.status(200).send(modifiedUser);
+            }
             else
                 return res.status(400).send({errors: ["non-existent id"]});
         }
@@ -135,10 +141,16 @@ export const deleteUser = (db: Firestore) => {
     return async (req, res, next) => {
 
         try {
-            let userDeleted = await usersModels.deleteUser(db, req.params.id);
+            let [userDeleted, user] = await usersModels.deleteUser(db, req.params.id);
 
-            if (userDeleted) 
+            if (userDeleted) {
+                await logsModel.newLog(
+                    db, 
+                    (<TokenPayload>req.token).email, 
+                    logsModel.users_deleteUserMessage(user));
+
                 return res.status(200).send();
+            }
             else
                 return res.status(400).send({errors: ["non-existent id"]});
         }

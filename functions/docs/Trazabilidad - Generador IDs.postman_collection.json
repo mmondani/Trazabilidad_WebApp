@@ -81,7 +81,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ycastagnola@x-28.com\",\r\n    \"password\":\"1234\",\r\n    \"level\":\"operator\"\r\n}",
+							"raw": "{\r\n    \"email\":\"fzurita@x-28.com\",\r\n    \"password\":\"1234\",\r\n    \"level\":\"operator\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -255,7 +255,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"originId\":\"123456888#1235\",\r\n    \"week\":15,\r\n    \"year\":2024,\r\n    \"from\":15001,\r\n    \"to\":16500\r\n}",
+							"raw": "{\r\n    \"originId\":\"dN5apSYH0qU7I1kAUfx6\",\r\n    \"week\":20,\r\n    \"year\":2024,\r\n    \"from\":15001,\r\n    \"to\":16500\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -292,7 +292,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"cFMvHP5HMRdWRoqddmvZ\",\r\n    \"week\": 54,\r\n    \"year\": 2023,\r\n    \"from\": 2,\r\n    \"to\": 3,\r\n    \"originId\": \"55\"\r\n}",
+							"raw": "{\r\n    \"id\": \"rGFpKu850LbAZdV0EEUB\",\r\n    \"week\": 21,\r\n    \"year\": 2025,\r\n    \"from\": 1,\r\n    \"to\": 2,\r\n    \"originId\": \"NnsjYcponKrh0JSw8KPD\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -328,14 +328,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/api/batchs/cFMvHP5HMRdWRoqddmvZ",
+							"raw": "{{API_URL}}/api/batchs/rGFpKu850LbAZdV0EEUB",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"api",
 								"batchs",
-								"cFMvHP5HMRdWRoqddmvZ"
+								"rGFpKu850LbAZdV0EEUB"
 							]
 						}
 					},
@@ -472,6 +472,39 @@
 								"api",
 								"origins",
 								"whdPJDOSo0GPr9HxAysZ"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "logs",
+			"item": [
+				{
+					"name": "get logs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{API_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/logs",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"logs"
 							]
 						}
 					},

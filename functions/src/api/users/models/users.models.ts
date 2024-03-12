@@ -20,7 +20,7 @@ export const userExists = async (db: Firestore, email: string) => {
 
 
 export const getUsers = async (db: Firestore) => {
-    const usersList = await db.collection("users").get();
+    const usersList = await db.collection("users").orderBy("createdAt").get();
     const usersListDocs = usersList.docs;
     const users = usersListDocs.map ((doc) => {
         let data = doc.data();
@@ -84,9 +84,9 @@ export const deleteUser = async (db: Firestore, id) => {
     if (userData.exists) {
         await userDoc.delete();
 
-        return true;
+        return [true, userData.get("email")];
     }
     else {
-        return false;
+        return [false];
     }
 };

@@ -29,7 +29,7 @@ export const batchExists = async (db: Firestore, batch: Batch) => {
 
 
 export const getBatchs = async (db: Firestore) => {
-    const batchsList = await db.collection("batchs").get();
+    const batchsList = await db.collection("batchs").orderBy("createdAt").get();
     const batchsListDocs = batchsList.docs;
     const batchs = batchsListDocs.map ((doc) => {
         let data = doc.data();
@@ -43,6 +43,22 @@ export const getBatchs = async (db: Firestore) => {
     return {
         data: batchs
     }
+};
+
+
+export const getBatchById = async (db: Firestore, id: string) => {
+    const batchsDoc = await db.collection("batchs").doc(id);
+    const batchData = await batchsDoc.get();
+
+    return {
+            id: batchData.id,
+            originId: batchData.get("originId"),
+            week: batchData.get("week"),
+            year: batchData.get("year"),
+            from: batchData.get("from"),
+            to: batchData.get("to"),
+            createdAt: batchData.get("createdAt")
+        }; 
 };
 
 
@@ -128,9 +144,9 @@ export const deleteBatch = async (db: Firestore, id) => {
     if (batchData.exists) {
         await batchDoc.delete();
 
-        return true;
+        return [true, batchData.get("originId"), batchData.get("week"), batchData.get("year"), batchData.get("from"), batchData.get("to")];
     }
     else {
-        return false;
+        return [false];
     }
 };

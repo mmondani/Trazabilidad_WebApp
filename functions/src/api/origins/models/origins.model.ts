@@ -22,7 +22,7 @@ export const originExists = async (db: Firestore, origin: Origin) => {
 
 
 export const getOrigins = async (db: Firestore) => {
-    const originsList = await db.collection("origins").get();
+    const originsList = await db.collection("origins").orderBy("createdAt").get();
     const originsListDocs = originsList.docs;
     const batchs = originsListDocs.map ((doc) => {
         let data = doc.data();
@@ -39,6 +39,18 @@ export const getOrigins = async (db: Firestore) => {
 };
 
 
+export const getOriginsById = async (db: Firestore, id: string) => {
+    const originsDoc = await db.collection("origins").doc(id);
+    const originData = await originsDoc.get();
+
+    return {
+            id: originData.id,
+            identifier: originData.get("identifier"),
+            description: originData.get("description"),
+            createdAt: originData.get("createdAt"),
+        }; 
+};
+
 export const createOrigin = async (db: Firestore, origin: Origin) => {
     let originExist = await originExists(db, origin);
 
@@ -50,8 +62,8 @@ export const createOrigin = async (db: Firestore, origin: Origin) => {
 
     return {
         id: entry.id,
-        originId: origin.identifier,
-        week: origin.description,
+        identifier: origin.identifier,
+        description: origin.description,
         createdAt: origin.createdAt
     };
 };
@@ -84,9 +96,9 @@ export const deleteOrigin = async (db: Firestore, id) => {
     if (originData.exists) {
         await originDoc.delete();
 
-        return true;
+        return [true, originData.get("identifier"), originData.get("description")];
     }
     else {
-        return false;
+        return [false];
     }
 };
