@@ -42,8 +42,9 @@
                         <button 
                             mat-raised-button color="primary" 
                             style="width: 100%; margin-top: 20px; min-height: 50px;"
-                            [disabled]="!loginForm.valid">
-                            Ingresar
+                            [disabled]="!loginForm.valid || loading"
+                            [class.spinner]="loading">
+                            Ingresar                            
                         </button>
                     </form>
                 </div>
@@ -55,3 +56,10 @@
     <mat-grid-tile [colspan]="4">
     </mat-grid-tile>
 </mat-grid-list>
+
+<app-alert-dialog
+    [message] = "error"
+    buttonText = "Aceptar"
+    (close) = "onDialogClose()"
+    *ngIf="error"
+></app-alert-dialog>

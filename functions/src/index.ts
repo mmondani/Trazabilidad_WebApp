@@ -12,7 +12,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-app.use(cors({origin: true}));
+app.use(cors());
 
 userRoutes(app, db);
 batchRoutes(app, db);
