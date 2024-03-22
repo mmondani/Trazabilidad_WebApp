@@ -4,6 +4,7 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { LoginUser } from '../models/login-user.model';
+import { Router } from '@angular/router';
 
 
 export interface LoginResponseData {
@@ -16,7 +17,7 @@ export interface LoginResponseData {
 export class AuthService {
   user = new BehaviorSubject<LoginUser>(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(email: string, password: string) {
     return this.http.post<LoginResponseData>(
@@ -56,5 +57,12 @@ export class AuthService {
     // Se chequea si el token no está vencido
     if (loadedUser.token)
       this.user.next(loadedUser);
+  }
+
+
+  logout () {
+    this.user.next(null);
+    localStorage.removeItem('userData');
+    this.router.navigate(['/']);
   }
 }

@@ -10,6 +10,7 @@ import { BatchsComponent } from './sections/batchs/batchs.component';
 import { OriginsComponent } from './sections/origins/origins.component';
 import { LogsComponent } from './sections/logs/logs.component';
 import { UsersComponent } from './sections/users/users.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -27,7 +28,8 @@ import { UsersComponent } from './sections/users/users.component';
   imports: [
     CommonModule,
     MatGridListModule,
-    DashboardRoutesModule
+    DashboardRoutesModule,
+    MatButtonModule
   ]
 })
 export class DashboardModule { }

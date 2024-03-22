@@ -1,8 +1,13 @@
 <mat-grid-list cols="12" rowHeight="100vh">
     <mat-grid-tile [colspan]="1">
         <div style="width:100%; height: 100%; align-content: baseline;">
-            <div style="width:100%; height: 15vh; background-color: lightcoral;">
-                <app-profile></app-profile>
+            <div style="width:100%;">
+                <app-profile
+                    [username] = "userName"
+                    [level] = "userLevel"
+                    (clickLogout) = "onLogout()"
+                    *ngIf="loggedUser">
+                </app-profile>
             </div>
             <div style="width:100%; height: 85vh; background-color: lightgoldenrodyellow;">
                 <app-dashboard-sections></app-dashboard-sections>

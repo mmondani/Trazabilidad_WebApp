@@ -1,1 +1,19 @@
-<p>profile works!</p>
+<div style="padding: 10px;">
+    <div class="profile-block">
+        <img src="../../../assets/icons/profile_photo.png" class="profile-image">
+        <div class="profile-info">
+            <div class="user-name">{{username}}</div>
+            <div class="user-level">{{level}}</div>
+        </div>
+    </div>
+    <div style="text-align: right; margin-top: 25px; margin-bottom: 5px;">
+        <!-- <button 
+            mat-button
+            style="margin-top: 10px;">
+            Cerrar sesión                          
+        </button> -->
+        <a href="" style="text-decoration: none; color: black;" (click)="onLogout()">
+            Cerrar sesión
+        </a>
+    </div>
+</div>

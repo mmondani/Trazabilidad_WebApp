@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
+  @Input() username: string = "";
+  @Input() level: string = "";
+  @Output() clickLogout = new EventEmitter();
 
+  onLogout () {
+    this.clickLogout.emit();
+  }
 }

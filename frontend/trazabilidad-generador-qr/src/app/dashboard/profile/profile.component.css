@@ -1,0 +1,24 @@
+.profile-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
+}
+
+.profile-image {
+    width: 25%; /* ajusta el tamaño según necesites */
+    height: auto;
+}
+
+.profile-info {
+    flex-grow: 1; /* hace que ocupe todo el espacio disponible */
+    text-align: right;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.user-level {
+    color: lightgray;
+}
