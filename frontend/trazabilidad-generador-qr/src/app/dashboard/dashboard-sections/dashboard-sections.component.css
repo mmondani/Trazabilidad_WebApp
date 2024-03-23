@@ -3,6 +3,19 @@ a {
     color: black;
 }
 
+.container {
+    position: relative;
+}
+
 .selected {
-    border-right: 5px solid blue;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 5px; /* Ancho del borde a la derecha */
+    background-color: rgb(0, 72, 153);
+}
+
+.highlight {
+    opacity: 1 !important;
 }

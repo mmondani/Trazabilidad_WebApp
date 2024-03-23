@@ -1,7 +1,8 @@
-<div style="text-align: center;">
+<div style="text-align: center; margin-top: 20px;">
     <div *ngFor="let section of sections">
-        <a href="#" [routerLink]="section.relativePath" (click)="onSectionClick($event, section.name)">
-            <div style="margin-top: 20px;" routerLinkActive="selected">
+        <a href="#" [routerLink]="section.relativePath" class="container" (click)="onSectionClick($event, section.name)">
+            <div routerLinkActive="selected"></div>
+            <div style="margin-top: 20px;" style="opacity: 0.4;" routerLinkActive="highlight">
                 <img src="{{section.iconPath}}" width="30%">
                 <p>{{section.name}}</p>
             </div>
