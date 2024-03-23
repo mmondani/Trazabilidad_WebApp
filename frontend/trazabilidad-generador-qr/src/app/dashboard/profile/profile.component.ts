@@ -10,7 +10,8 @@ export class ProfileComponent {
   @Input() level: string = "";
   @Output() clickLogout = new EventEmitter();
 
-  onLogout () {
+  onLogout (event: Event) {
+    event.preventDefault();
     this.clickLogout.emit();
   }
 }

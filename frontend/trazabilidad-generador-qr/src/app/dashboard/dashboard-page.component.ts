@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginUser } from '../models/login-user.model';
 import { AuthService } from '../login/auth.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -15,7 +16,7 @@ export class DashboardPageComponent implements OnInit{
   constructor(private auth: AuthService) {};
 
   ngOnInit(): void {
-    this.auth.user.subscribe(user => {
+    this.auth.user.pipe(take(1)).subscribe(user => {
       this.loggedUser = user;
       this.userLevel = user.level;
       this.userName = user.email.split('@')[0];

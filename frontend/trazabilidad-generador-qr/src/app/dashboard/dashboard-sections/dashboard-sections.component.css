@@ -1,0 +1,8 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.selected {
+    border-right: 5px solid blue;
+}

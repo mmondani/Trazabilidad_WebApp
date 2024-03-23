@@ -1,1 +1,10 @@
-<p>dashboard-sections works!</p>
+<div style="text-align: center;">
+    <div *ngFor="let section of sections">
+        <a href="#" [routerLink]="section.relativePath" (click)="onSectionClick($event, section.name)">
+            <div style="margin-top: 20px;" routerLinkActive="selected">
+                <img src="{{section.iconPath}}" width="30%">
+                <p>{{section.name}}</p>
+            </div>
+        </a>
+    </div>
+</div>
