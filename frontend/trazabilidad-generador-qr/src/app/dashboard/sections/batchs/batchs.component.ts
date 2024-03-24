@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrl: './batchs.component.css'
 })
 export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
-  displayedColumns: string[] = ['originId', 'week', 'year', 'from', 'to', 'quantity', 'createdAt', 'actions'];
+  displayedColumns: string[] = ['origin', 'week', 'year', 'from', 'to', 'quantity', 'createdAt', 'actions'];
   dataSource: MatTableDataSource<Batch>;
   batchServiceSub: Subscription;
   batchList: Batch[];

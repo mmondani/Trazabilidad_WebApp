@@ -1,3 +1,5 @@
+import { Origin } from "./origin.model";
+
 export class Batch {
     constructor(
         public id: string,
@@ -7,6 +9,7 @@ export class Batch {
         public year: number,
         public from: number,
         public to: number,
-        public quantity?: number
+        public quantity?: number,
+        public origin?: Origin
     ) {}
 }
