@@ -11,6 +11,8 @@ import { OriginsComponent } from './sections/origins/origins.component';
 import { LogsComponent } from './sections/logs/logs.component';
 import { UsersComponent } from './sections/users/users.component';
 import { MatButtonModule } from '@angular/material/button';
+import { TitlebarComponent } from './titlebar/titlebar.component';
+import { TitlebarService } from './titlebar/titlebar.service';
 
 
 
@@ -23,13 +25,17 @@ import { MatButtonModule } from '@angular/material/button';
     BatchsComponent,
     OriginsComponent,
     LogsComponent,
-    UsersComponent
+    UsersComponent,
+    TitlebarComponent
   ],
   imports: [
     CommonModule,
     MatGridListModule,
     DashboardRoutesModule,
     MatButtonModule
+  ],
+  providers: [
+    TitlebarService
   ]
 })
 export class DashboardModule { }

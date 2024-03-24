@@ -1,0 +1,12 @@
+.container {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+img {
+    height: 20px;
+}

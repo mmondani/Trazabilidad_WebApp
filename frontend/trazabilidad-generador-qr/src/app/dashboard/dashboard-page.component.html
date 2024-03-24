@@ -1,5 +1,5 @@
 <mat-grid-list cols="12" rowHeight="100vh">
-    <mat-grid-tile [colspan]="1">
+    <mat-grid-tile [colspan]="1" style="border-right: 1px solid lightgray;">
         <div style="width:100%; height: 100%; align-content: baseline;">
             <div style="width:100%;">
                 <app-profile
@@ -9,16 +9,18 @@
                     *ngIf="loggedUser">
                 </app-profile>
             </div>
-            <hr>
-            <div style="width:100%; height: 85vh;">
-                <app-dashboard-sections
-                >
+            <hr style="border-top: 1px solid lightgray;">
+            <div style="width:100%">
+                <app-dashboard-sections>
                 </app-dashboard-sections>
             </div>
         </div>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="11" style="background-color: lightgreen;">
+    <mat-grid-tile [colspan]="11" >
         <div style="width: 100%; height: 100%; align-content: baseline; text-align: left;">
+            <div style="width: 100%">
+                <app-titlebar></app-titlebar>
+            </div>
             <router-outlet></router-outlet>
         </div>
     </mat-grid-tile>

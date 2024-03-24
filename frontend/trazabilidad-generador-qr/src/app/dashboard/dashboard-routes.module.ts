@@ -15,15 +15,15 @@ const dashboardRoutes: Routes = [
       {
         path: '', 
         redirectTo: 'batchs', 
-        pathMatch: 'full' 
+        pathMatch: 'full'
       },
       {
           path: 'batchs',
-          component: BatchsComponent,
+          component: BatchsComponent
       },
       {
           path: 'origins',
-          component: OriginsComponent,
+          component: OriginsComponent
       },
       {
           path: 'logs',
