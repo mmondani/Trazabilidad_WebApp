@@ -2,6 +2,17 @@
 <div class="dialog-box">
     <p>{{message}}</p>
     <div class="dialog-actions">
-        <button mat-stroked-button color="primary" (click)="onActionButtonClick()">{{buttonText}}</button>
+        <span [ngSwitch]="noStyle" *ngIf="noEnable">
+            <button *ngSwitchCase="'basic'" mat-button [color]="noColor" (click)="onNoClick()" >{{noText}}</button>
+            <button *ngSwitchCase="'outline'" mat-button [color]="noColor" (click)="onNoClick()" >{{noText}}</button>
+            <button *ngSwitchCase="'filled'" mat-button [color]="noColor" (click)="onNoClick()" >{{noText}}</button>
+        </span>
+
+        <span [ngSwitch]="yesStyle" style="margin-left: 10px;">
+            <button *ngSwitchCase="'basic'" mat-button [color]="yesColor" (click)="onYesClick()">{{yesText}}</button>
+            <button *ngSwitchCase="'outline'" mat-stroked-button [color]="yesColor" (click)="onYesClick()">{{yesText}}</button>
+            <button *ngSwitchCase="'filled'" mat-raised-button [color]="yesColor" (click)="onYesClick()">{{yesText}}</button>
+        </span>
+        
     </div>
 </div>

@@ -76,4 +76,21 @@
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
 
+    <app-alert-dialog
+        [message] = "deleteBatchDialog_message"
+        [data] = "deleteBatchDialog_data"
+
+        [yesText] = "'Eliminar'"
+        [yesStyle] = "'filled'"
+        [yesColor] = "'warn'"
+
+        [noEnable] = "true"
+        [noText] = "'Cancelar'"
+        [noStyle] = "'basic'"
+        [noColor] = "'primary'"
+
+        (yes) = "yesDeleteBatch($event)"
+        (no) = "noDeleteBatch($event)"
+        *ngIf="deleteBatchDialog_message">
+    </app-alert-dialog>
 </div>

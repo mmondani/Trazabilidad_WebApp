@@ -18,6 +18,10 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   batchServiceSub: Subscription;
   batchList: Batch[];
 
+  deleteBatchDialog_data: Batch = null;
+  deleteBatchDialog_message = "";
+
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -92,11 +96,22 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   deleteBatchClick(batch: Batch) {
+    this.deleteBatchDialog_message = `¿Estás seguro que querés eliminar el lote ${batch.origin.identifier} ${batch.from}-${batch.to}?`
+    this.deleteBatchDialog_data = batch;
+  }
+
+  yesDeleteBatch(batch) {
+    this.deleteBatchDialog_message = "";
+
     this.batchService.deleteBatch(batch.id).subscribe(() => {
       this.batchService.getBatchs().subscribe(() => {});
     },
     () => {
       console.log ("Error al eliminar el batch: " + batch.id)
     })
+  }
+
+  noDeleteBatch(batch) {
+    this.deleteBatchDialog_message = "";
   }
 }

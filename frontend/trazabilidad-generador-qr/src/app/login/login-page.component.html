@@ -59,7 +59,9 @@
 
 <app-alert-dialog
     [message] = "error"
-    buttonText = "Aceptar"
-    (close) = "onDialogClose()"
-    *ngIf="error"
-></app-alert-dialog>
+    [yesText] = "'Aceptar'"
+    [yesStyle] = "'outline'"
+    [yesColor] = "'primary'"
+    (yes) = "onDialogClose()"
+    *ngIf="error">
+</app-alert-dialog>

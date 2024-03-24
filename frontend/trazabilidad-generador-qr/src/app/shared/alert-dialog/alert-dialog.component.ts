@@ -9,12 +9,24 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class AlertDialogComponent {
   @Input() title = "";
   @Input() message = "";
-  @Input() buttonText = "";
-  @Output() close = new EventEmitter();
+  @Input() noText = "";
+  @Input() yesText = "";
+  @Input() noEnable = false;
+  @Input() noStyle: "basic" | "outline" | "filled" = "outline";
+  @Input() yesStyle: "basic" | "outline" | "filled" = "outline";
+  @Input() noColor: "" | "primary" | "accent" | "warned" = "";
+  @Input() yesColor: "" | "primary" | "accent" | "warned" = "";
+  @Input() data = null;
+  @Output() no = new EventEmitter();
+  @Output() yes = new EventEmitter();
 
   constructor() {}
 
-  onActionButtonClick() {
-    this.close.emit();
+  onNoClick() {
+    this.no.emit(this.data);
+  }
+
+  onYesClick() {
+    this.yes.emit(this.data);
   }
 }
