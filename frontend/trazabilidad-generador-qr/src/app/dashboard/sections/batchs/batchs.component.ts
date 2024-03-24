@@ -6,6 +6,7 @@ import { Batch } from '../../../models/batch.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { LoadingService } from '../../../shared/loading/loading.service';
 
 @Component({
   selector: 'app-batchs',
@@ -27,7 +28,8 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private titlebarService: TitlebarService,
-    private batchService: BatchsService
+    private batchService: BatchsService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -39,9 +41,12 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource = new MatTableDataSource(batchList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
+      this.loadingService.hideLoading();
     });
 
     // Se pide el listado de batchs
+    this.loadingService.showLoading();
     this.batchService.getBatchs().subscribe(() => {});
   }
 
@@ -103,10 +108,12 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   yesDeleteBatch(batch) {
     this.deleteBatchDialog_message = "";
 
+    this.loadingService.showLoading();
     this.batchService.deleteBatch(batch.id).subscribe(() => {
       this.batchService.getBatchs().subscribe(() => {});
     },
     () => {
+      this.loadingService.hideLoading();
       console.log ("Error al eliminar el batch: " + batch.id)
     })
   }

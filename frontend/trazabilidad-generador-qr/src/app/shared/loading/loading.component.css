@@ -1,0 +1,20 @@
+.spinner-icon {
+    padding-top: 50vh;
+    padding-left: 50vw;
+}
+
+.spinner-icon  .spinner-border {
+    border: 8px solid #fff; /* Light grey */
+    border-top: 8px solid #1976d2; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 1s linear infinite;
+        -ms-animation: spin 1s linear infinite;
+        animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

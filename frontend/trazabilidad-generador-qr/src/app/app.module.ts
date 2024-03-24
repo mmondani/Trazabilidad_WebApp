@@ -7,6 +7,7 @@ import { MatGridListModule } from '@angular/material/grid-list'
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './login/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     MatGridListModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [
     provideAnimationsAsync()
