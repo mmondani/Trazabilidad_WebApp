@@ -33,6 +33,8 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.batchServiceSub = this.batchService.batchList.subscribe(batchList => {
       this.batchList = batchList;
       this.dataSource = new MatTableDataSource(batchList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
 
     // Se pide el listado de batchs
