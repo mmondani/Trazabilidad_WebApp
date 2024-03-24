@@ -21,7 +21,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post<LoginResponseData>(
-        environment.api_url + "/api/users/login",
+        environment.api_url + "/users/login",
         {
           email: email,
           password: password

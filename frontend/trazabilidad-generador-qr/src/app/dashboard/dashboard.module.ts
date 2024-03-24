@@ -13,8 +13,13 @@ import { UsersComponent } from './sections/users/users.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { TitlebarService } from './titlebar/titlebar.service';
-
-
+import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule} from '@angular/material/sort';
+import { MatTableModule} from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,14 @@ import { TitlebarService } from './titlebar/titlebar.service';
     CommonModule,
     MatGridListModule,
     DashboardRoutesModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatTableModule, 
+    MatSortModule, 
+    MatPaginatorModule,
+    MatTooltipModule, 
+    MatIconModule
   ],
   providers: [
     TitlebarService
