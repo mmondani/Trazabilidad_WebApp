@@ -90,6 +90,11 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   deleteBatchClick(batch: Batch) {
-    console.log(batch);
+    this.batchService.deleteBatch(batch.id).subscribe(() => {
+      this.batchService.getBatchs().subscribe(() => {});
+    },
+    () => {
+      console.log ("Error al eliminar el batch: " + batch.id)
+    })
   }
 }

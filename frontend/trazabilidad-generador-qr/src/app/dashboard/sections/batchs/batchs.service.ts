@@ -71,4 +71,17 @@ export class BatchsService {
       })
     )
   }
+
+  deleteBatch(id: string) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(user => {
+        return this.http.delete(environment.api_url + "/batchs/" + id, {
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${user.token}`
+          })
+        })
+      })
+    )
+  }
 }
