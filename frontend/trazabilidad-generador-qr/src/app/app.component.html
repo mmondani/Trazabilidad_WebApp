@@ -1,2 +1,19 @@
 <router-outlet></router-outlet>
+
 <app-loading *ngIf="showLoading"></app-loading>
+
+<app-alert-dialog
+    [title] = "dialogConfig.title"
+    [message] = "dialogConfig.message"
+    [noEnable] = "dialogConfig.noEnable"
+    [noText] = "dialogConfig.noText"
+    [yesText] = "dialogConfig.yesText"
+    [noStyle] = "dialogConfig.noStyle"
+    [yesStyle] = "dialogConfig.yesStyle"
+    [noColor] = "dialogConfig.noColor"
+    [yesColor] = "dialogConfig.yesColor"
+    [data] = "dialogConfig.data"
+    (no) = "dialogConfig.noClick($event)"
+    (yes) = "dialogConfig.yesClick($event)"
+    *ngIf="dialogConfig.show">
+</app-alert-dialog>

@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { LoadingService } from '../../../shared/loading/loading.service';
+import { AlertDialogService } from '../../../shared/alert-dialog/alert-dialog.service';
 
 @Component({
   selector: 'app-batchs',
@@ -19,9 +20,6 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   batchServiceSub: Subscription;
   batchList: Batch[];
 
-  deleteBatchDialog_data: Batch = null;
-  deleteBatchDialog_message = "";
-
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -29,7 +27,8 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private titlebarService: TitlebarService,
     private batchService: BatchsService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private alertDialogService: AlertDialogService
   ) {}
 
   ngOnInit(): void {
@@ -101,12 +100,23 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   deleteBatchClick(batch: Batch) {
-    this.deleteBatchDialog_message = `¿Estás seguro que querés eliminar el lote ${batch.origin.identifier} ${batch.from}-${batch.to}?`
-    this.deleteBatchDialog_data = batch;
+    this.alertDialogService.showDialog({
+      message: `¿Estás seguro que querés eliminar el lote ${batch.origin.identifier} ${batch.from}-${batch.to}?`,
+      data: batch,
+      yesText: "Eliminar",
+      yesStyle: "filled",
+      yesColor: "warn",
+      noEnable: true,
+      noText: "Cancelar",
+      noStyle: "basic",
+      noColor: "primary",
+      yesClick: this.yesDeleteBatch.bind(this),
+      noClick: this.noDeleteBatch.bind(this)
+    })
   }
 
   yesDeleteBatch(batch) {
-    this.deleteBatchDialog_message = "";
+    this.alertDialogService.hideDialog();
 
     this.loadingService.showLoading();
     this.batchService.deleteBatch(batch.id).subscribe(() => {
@@ -119,6 +129,6 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   noDeleteBatch(batch) {
-    this.deleteBatchDialog_message = "";
+    this.alertDialogService.hideDialog();
   }
 }

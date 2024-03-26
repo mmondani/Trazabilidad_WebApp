@@ -56,12 +56,3 @@
     <mat-grid-tile [colspan]="4">
     </mat-grid-tile>
 </mat-grid-list>
-
-<app-alert-dialog
-    [message] = "error"
-    [yesText] = "'Aceptar'"
-    [yesStyle] = "'outline'"
-    [yesColor] = "'primary'"
-    (yes) = "onDialogClose()"
-    *ngIf="error">
-</app-alert-dialog>
