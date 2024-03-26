@@ -6,6 +6,7 @@ import { BatchsComponent } from './sections/batchs/batchs.component';
 import { OriginsComponent } from './sections/origins/origins.component';
 import { LogsComponent } from './sections/logs/logs.component';
 import { UsersComponent } from './sections/users/users.component';
+import { BatchDetailComponent } from './sections/batchs/detail/batch-detail/batch-detail.component';
 
 const dashboardRoutes: Routes = [
   {
@@ -20,6 +21,10 @@ const dashboardRoutes: Routes = [
       {
           path: 'batchs',
           component: BatchsComponent
+      },
+      {
+        path: 'batchs/detail',
+        component: BatchDetailComponent
       },
       {
           path: 'origins',

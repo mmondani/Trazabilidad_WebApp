@@ -21,6 +21,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { SharedModule } from '../shared/shared.module';
+import { BatchDetailComponent } from '../dashboard/sections/batchs/detail/batch-detail/batch-detail.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SharedModule } from '../shared/shared.module';
     OriginsComponent,
     LogsComponent,
     UsersComponent,
-    TitlebarComponent
+    TitlebarComponent,
+    BatchDetailComponent
   ],
   imports: [
     CommonModule,

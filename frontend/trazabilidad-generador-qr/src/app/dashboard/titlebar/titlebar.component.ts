@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TitlebarService } from './titlebar.service';
 import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 interface RouteData {
   title: string,
@@ -19,7 +20,10 @@ export class TitlebarComponent implements OnInit, OnDestroy{
   titleSubs: Subscription;
   backSubs: Subscription;
 
-  constructor(private titlebarService: TitlebarService) {}
+  constructor(
+    private titlebarService: TitlebarService,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
     this.titleSubs = this.titlebarService.title.subscribe(title => {
@@ -33,6 +37,11 @@ export class TitlebarComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.titleSubs.unsubscribe();
-    this.backSubs. unsubscribe();
+    this.backSubs.unsubscribe();
+  }
+
+  onBackClic(event: Event) {
+    this.location.back();
+    event.preventDefault();
   }
 }

@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { AlertDialogService } from '../../../shared/alert-dialog/alert-dialog.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-batchs',
@@ -28,7 +29,8 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
     private titlebarService: TitlebarService,
     private batchService: BatchsService,
     private loadingService: LoadingService,
-    private alertDialogService: AlertDialogService
+    private alertDialogService: AlertDialogService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +70,7 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   newBatchClick() {
-    
+    //this.router.navigate(["batchs/detail"])
   }
 
   downloadTxtClick(batch: Batch) {

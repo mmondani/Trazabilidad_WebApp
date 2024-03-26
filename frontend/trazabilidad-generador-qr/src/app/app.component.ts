@@ -32,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.loadingEventsSubs.unsubscribe();
+    this.dialogConfigSubs.unsubscribe();
   }
 
 }
