@@ -136,7 +136,7 @@ export class BatchDetailComponent implements OnInit {
         batch.origin = this.origins.find(origin => origin.id === batch.originId);
 
         this.alertDialogService.showDialog({
-          message: `Se creó exitósamente el lote de IDs desde ${batch.from} hasta ${batch.to}`,
+          message: `Se creó exitósamente el lote de IDs desde ${batch.from} hasta ${batch.to} con el origen ${batch.origin.identifier} - ${batch.origin.description}`,
           noEnable: true,
           noText: "Finalizar",
           noStyle: "basic",
