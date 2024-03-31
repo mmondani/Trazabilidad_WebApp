@@ -10,6 +10,8 @@ import { LoadingService } from '../../../shared/loading/loading.service';
 import { AlertDialogService } from '../../../shared/alert-dialog/alert-dialog.service';
 import { Router } from '@angular/router';
 import { downloadTxt } from './downloadTxt';
+import { AuthService } from '../../../login/auth.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-batchs',
@@ -21,12 +23,14 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource: MatTableDataSource<Batch>;
   batchServiceSub: Subscription;
   batchList: Batch[];
+  loginUserLevel: string = 'admin';
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private auth: AuthService,
     private titlebarService: TitlebarService,
     private batchService: BatchsService,
     private loadingService: LoadingService,
@@ -37,6 +41,13 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.titlebarService.title = "Listado de lotes creados";
     this.titlebarService.back = false;
+
+    // Se busca el nivel de privilegio del usuario logueado
+    this.auth.user.pipe(
+      take(1)
+    ).subscribe(loginUser => {
+      this.loginUserLevel = loginUser.level;
+    })
 
     this.batchServiceSub = this.batchService.batchList.subscribe(batchList => {
       this.batchList = batchList;

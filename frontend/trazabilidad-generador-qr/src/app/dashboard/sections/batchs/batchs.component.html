@@ -55,10 +55,22 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Descargar .txt" (click)="downloadTxtClick(row)">
+                    <button 
+                        *ngIf="loginUserLevel === 'admin'"
+                        mat-icon-button 
+                        matTooltip="Descargar .txt" 
+                        (click)="downloadTxtClick(row)">
+
                         <mat-icon>download</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="deleteBatchClick(row)">
+
+                    <button 
+                        *ngIf="loginUserLevel === 'admin'"
+                        mat-icon-button 
+                        matTooltip="Eliminar" 
+                        color="warn" 
+                        (click)="deleteBatchClick(row)">
+
                         <mat-icon>delete</mat-icon>
                     </button>
                 </td>

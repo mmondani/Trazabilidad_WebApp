@@ -9,6 +9,8 @@ import { OriginsService } from './origins.service';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { AlertDialogService } from '../../../shared/alert-dialog/alert-dialog.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../login/auth.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-origins',
@@ -20,11 +22,13 @@ export class OriginsComponent implements OnInit, OnDestroy, AfterViewInit  {
   dataSource: MatTableDataSource<Origin>;
   originServiceSub: Subscription;
   originList: Origin[];
+  loginUserLevel: string = 'admin';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private auth: AuthService,
     private titlebarService: TitlebarService,
     private originService: OriginsService,
     private loadingService: LoadingService,
@@ -36,6 +40,13 @@ export class OriginsComponent implements OnInit, OnDestroy, AfterViewInit  {
   ngOnInit(): void {
     this.titlebarService.title = "Listado de orígenes";
     this.titlebarService.back = false;
+
+    // Se busca el nivel de privilegio del usuario logueado
+    this.auth.user.pipe(
+      take(1)
+    ).subscribe(loginUser => {
+      this.loginUserLevel = loginUser.level;
+    })
 
     this.originServiceSub = this.originService.originList.subscribe(originList => {
       this.originList = originList;
