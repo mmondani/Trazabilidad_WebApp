@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { OriginsService } from '../origins/origins.service';
+import { Origin } from '../../../models/origin.model';
 
 interface GetBatchsResponse {
   data: Batch[]
@@ -67,7 +68,7 @@ export class BatchsService {
     }).pipe(
       map(value => {
         value.batchs.forEach(batch => {
-          batch.origin = value.origins.find(origin => batch.originId === origin.id);
+          batch.origin = value.origins.find(origin => batch.originId === origin.id) || new Origin("?", "No definido");
         })
 
         this._batchList.next(value.batchs);
