@@ -48,4 +48,17 @@ export class OriginsService {
       })
     )
   }
+
+  deleteOrigin (id: string) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(user => {
+        return this.http.delete(environment.api_url + "/origins/" + id, {
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${user.token}`
+          })
+        })
+      })
+    )
+  }
 }
