@@ -16,7 +16,7 @@
     </mat-grid-list>
 
     <div>
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortActive="createdAt">
             <ng-container matColumnDef="origin">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Origen </th>
                 <td mat-cell *matCellDef="let row"> {{row.origin.identifier}} - {{row.origin.description}} </td>

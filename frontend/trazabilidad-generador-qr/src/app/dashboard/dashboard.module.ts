@@ -20,8 +20,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSelectModule} from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { BatchDetailComponent } from '../dashboard/sections/batchs/detail/batch-detail/batch-detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { BatchDetailComponent } from '../dashboard/sections/batchs/detail/batch-
     MatPaginatorModule,
     MatTooltipModule, 
     MatIconModule,
-    SharedModule
+    MatSelectModule,
+    SharedModule,
+    ReactiveFormsModule
   ],
   providers: [
     TitlebarService

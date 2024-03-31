@@ -1,1 +1,167 @@
-<p>batch-detail works!</p>
+<form [formGroup]="newBatchForm" (ngSubmit)="onSubmit()" style="margin-top: 20px;">
+    <mat-grid-list cols="12" gutterSize="20px">
+        <mat-grid-tile [colspan]="2">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="4">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>Origen</mat-label>
+                    <mat-select formControlName="originFormControl">
+                        <mat-option *ngFor="let origin of origins" value="{{origin.id}}">{{origin.identifier}} - {{origin.description}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!newBatchForm.get('originFormControl').valid && newBatchForm.get('originFormControl').touched && newBatchForm.get('originFormControl').errors['required']">
+                        Campo requerido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Semana</mat-label>
+                    <input 
+                        type="number" 
+                        matInput 
+                        formControlName="weekFormControl">
+                        <mat-error *ngIf="!newBatchForm.get('weekFormControl').valid && newBatchForm.get('weekFormControl').touched && newBatchForm.get('weekFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('weekFormControl').valid && newBatchForm.get('weekFormControl').touched && newBatchForm.get('weekFormControl').errors['min']">
+                            Valor mínimo {{newBatchForm.get('weekFormControl').errors['min'].min}}
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('weekFormControl').valid && newBatchForm.get('weekFormControl').touched && newBatchForm.get('weekFormControl').errors['max']">
+                            Valor máximo {{newBatchForm.get('weekFormControl').errors['max'].max}}
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Año</mat-label>
+                    <input 
+                        type="number" 
+                        matInput 
+                        formControlName="yearFormControl">
+                        <mat-error *ngIf="!newBatchForm.get('yearFormControl').valid && newBatchForm.get('yearFormControl').touched && newBatchForm.get('yearFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('yearFormControl').valid && newBatchForm.get('yearFormControl').touched && newBatchForm.get('yearFormControl').errors['min']">
+                            Valor mínimo {{newBatchForm.get('yearFormControl').errors['min'].min}}
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('yearFormControl').valid && newBatchForm.get('yearFormControl').touched && newBatchForm.get('yearFormControl').errors['max']">
+                            Valor máximo {{newBatchForm.get('yearFormControl').errors['max'].max}}
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="12" gutterSize="20px">
+        <mat-grid-tile [colspan]="2">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="3">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Desde</mat-label>
+                    <input 
+                        type="number" 
+                        matInput 
+                        formControlName="fromFormControl">
+                        <mat-error *ngIf="!newBatchForm.get('fromFormControl').valid && newBatchForm.get('fromFormControl').touched && newBatchForm.get('fromFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('fromFormControl').valid && newBatchForm.get('fromFormControl').touched && newBatchForm.get('fromFormControl').errors['min']">
+                            Valor mínimo {{newBatchForm.get('fromFormControl').errors['min'].min}}
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('fromFormControl').valid && newBatchForm.get('fromFormControl').touched && newBatchForm.get('fromFormControl').errors['max']">
+                            Valor máximo {{newBatchForm.get('fromFormControl').errors['max'].max}}
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="3">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Hasta</mat-label>
+                    <input 
+                        type="number" 
+                        matInput 
+                        formControlName="toFormControl">
+                        <mat-error *ngIf="!newBatchForm.get('toFormControl').valid && newBatchForm.get('toFormControl').touched && newBatchForm.get('toFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('toFormControl').valid && newBatchForm.get('toFormControl').touched && newBatchForm.get('toFormControl').errors['min']">
+                            Valor mínimo {{newBatchForm.get('toFormControl').errors['min'].min}}
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('toFormControl').valid && newBatchForm.get('toFormControl').touched && newBatchForm.get('toFormControl').errors['max']">
+                            Valor máximo {{newBatchForm.get('toFormControl').errors['max'].max}}
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Cantidad</mat-label>
+                    <input 
+                        type="number" 
+                        matInput 
+                        formControlName="quantityFormControl">
+                        <mat-error *ngIf="!newBatchForm.get('quantityFormControl').valid && newBatchForm.get('quantityFormControl').touched && newBatchForm.get('quantityFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('quantityFormControl').valid && newBatchForm.get('quantityFormControl').touched && newBatchForm.get('quantityFormControl').errors['min']">
+                            Valor mínimo {{newBatchForm.get('quantityFormControl').errors['min'].min}}
+                        </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('quantityFormControl').valid && newBatchForm.get('quantityFormControl').touched && newBatchForm.get('quantityFormControl').errors['max']">
+                            Valor máximo {{newBatchForm.get('quantityFormControl').errors['max'].max}}
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="12" gutterSize="20px" style="margin-top: 20px;">
+        <mat-grid-tile [colspan]="8">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1">
+            <button 
+                type="button"
+                mat-button color="primary" 
+                style="min-height: 50px;"
+                (click)="onCancelClick()">
+                Cancelar                       
+            </button>
+        </mat-grid-tile>
+        
+        <mat-grid-tile [colspan]="1">
+            <button 
+                mat-raised-button color="primary" 
+                style="min-height: 50px; width: 100%;"
+                [disabled]="!newBatchForm.valid || loading"
+                [class.spinner]="loading">
+                Crear                            
+            </button>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</form>

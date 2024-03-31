@@ -1,14 +1,21 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AuthService } from '../../../login/auth.service';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin, throwError } from 'rxjs';
 import { Batch } from '../../../models/batch.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { OriginsService } from '../origins/origins.service';
 
 interface GetBatchsResponse {
   data: Batch[]
+}
+
+interface NextFromResponse {
+  originId: string,
+  week: number,
+  year: number,
+  from: number
 }
 
 
@@ -48,8 +55,6 @@ export class BatchsService {
           batch.quantity = batch.to - batch.from + 1;
         })
 
-        
-
         return batchList;
       })
     )
@@ -68,6 +73,60 @@ export class BatchsService {
         this._batchList.next(value.batchs);
 
         return value.batchs;
+      })
+    )
+  }
+
+  getNextFrom (originId: string, week: number, year: number) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(user => {
+        return this.http.post<NextFromResponse>(environment.api_url + "/batchs/next_from", {
+          originId: originId,
+          week: week,
+          year: year
+        },{
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${user.token}`
+          })
+        })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        let message = "Error del servidor";
+
+        return throwError(message);
+      }),
+      map(nextFromResponse => {
+        return nextFromResponse.from;
+      })
+    )
+  }
+
+  newBatch (batch: Batch) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(user => {
+        return this.http.post<Batch>(environment.api_url + "/batchs", {
+          originId: batch.originId,
+          week: batch.week,
+          year: batch.year,
+          from: batch.from,
+          to: batch.to
+        },{
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${user.token}`
+          })
+        })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        let message = "Error desconocido";
+
+        if (error.status == 409)
+          message = "El lote ya existe";
+        else
+          message = "Error del servidor";
+
+        return throwError(message);
       })
     )
   }
