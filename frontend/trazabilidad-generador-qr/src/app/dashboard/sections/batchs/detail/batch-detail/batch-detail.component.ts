@@ -53,9 +53,9 @@ export class BatchDetailComponent implements OnInit {
       'originFormControl': new FormControl(null,[Validators.required]),
       'weekFormControl': new FormControl(currentWeek, [Validators.required, Validators.min(1), Validators.max(60)]),
       'yearFormControl': new FormControl(currentYear, [Validators.required, Validators.min(2024), Validators.max(2099)]),
-      'fromFormControl': new FormControl(1, [Validators.required, Validators.min(0), Validators.max(99999)]),
-      'toFormControl': new FormControl(1, [Validators.required, Validators.min(0), Validators.max(99999)]),
-      'quantityFormControl': new FormControl(1, [Validators.required, Validators.min(0), Validators.max(99999)])
+      'fromFormControl': new FormControl(1, [Validators.required, Validators.min(1), Validators.max(99999)]),
+      'toFormControl': new FormControl(1, [Validators.required, Validators.min(1), Validators.max(99999)]),
+      'quantityFormControl': new FormControl(1, [Validators.required, Validators.min(1), Validators.max(99999)])
     })
 
     this.newBatchForm.controls.fromFormControl.valueChanges.pipe(

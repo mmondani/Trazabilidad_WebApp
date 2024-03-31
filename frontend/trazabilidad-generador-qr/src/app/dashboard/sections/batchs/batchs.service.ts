@@ -98,7 +98,10 @@ export class BatchsService {
         return throwError(message);
       }),
       map(nextFromResponse => {
-        return nextFromResponse.from;
+        if (nextFromResponse.from > 0)
+          return nextFromResponse.from;
+        else
+          return 1;
       })
     )
   }
