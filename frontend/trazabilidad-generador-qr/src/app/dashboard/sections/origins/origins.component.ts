@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { OriginsService } from './origins.service';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { AlertDialogService } from '../../../shared/alert-dialog/alert-dialog.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-origins',
@@ -27,7 +28,9 @@ export class OriginsComponent implements OnInit, OnDestroy, AfterViewInit  {
     private titlebarService: TitlebarService,
     private originService: OriginsService,
     private loadingService: LoadingService,
-    private alertDialogService: AlertDialogService
+    private alertDialogService: AlertDialogService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +70,13 @@ export class OriginsComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   editClick (origin: Origin) {
-
+    this.router.navigate(['detail'],
+      {
+        relativeTo: this.route, 
+        queryParams: {
+          origin: JSON.stringify(origin)
+        }
+      });
   }
 
   deleteClick (origin: Origin) {

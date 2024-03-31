@@ -53,11 +53,21 @@
         
         <mat-grid-tile [colspan]="1">
             <button 
+                *ngIf="!originToEdit"
                 mat-raised-button color="primary" 
                 style="min-height: 50px; width: 100%;"
                 [disabled]="!newOriginForm.valid || loading"
                 [class.spinner]="loading">
                 Crear                            
+            </button>
+
+            <button 
+                *ngIf="originToEdit"
+                mat-raised-button color="primary" 
+                style="min-height: 50px; width: 100%;"
+                [disabled]="!newOriginForm.valid || loading"
+                [class.spinner]="loading">
+                Editar                            
             </button>
         </mat-grid-tile>
 

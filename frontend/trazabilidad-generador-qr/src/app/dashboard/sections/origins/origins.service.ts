@@ -75,6 +75,28 @@ export class OriginsService {
     )
   }
 
+  editOrigin (origin: Origin) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(user => {
+        return this.http.patch<Origin>(environment.api_url + "/origins", {
+          id: origin.id,
+          identifier: origin.identifier,
+          description: origin.description
+        },{
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${user.token}`
+          })
+        })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        let message = "Error del servidor";
+
+        return throwError(message);
+      })
+    )
+  }
+
   deleteOrigin (id: string) {
     return this.auth.user.pipe(
       take(1),
