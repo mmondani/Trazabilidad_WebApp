@@ -7,6 +7,7 @@ import { OriginsComponent } from './sections/origins/origins.component';
 import { LogsComponent } from './sections/logs/logs.component';
 import { UsersComponent } from './sections/users/users.component';
 import { BatchDetailComponent } from './sections/batchs/detail/batch-detail/batch-detail.component';
+import { OriginDetailComponent } from './sections/origins/origin-detail/origin-detail.component';
 
 const dashboardRoutes: Routes = [
   {
@@ -29,6 +30,10 @@ const dashboardRoutes: Routes = [
       {
           path: 'origins',
           component: OriginsComponent
+      },
+      {
+        path: 'origins/detail',
+        component: OriginDetailComponent
       },
       {
           path: 'logs',

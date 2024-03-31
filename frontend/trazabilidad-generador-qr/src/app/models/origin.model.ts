@@ -1,8 +1,8 @@
 export class Origin {
     constructor (
-        public id: string,
         public identifier: string,
         public description: string,
-        public createdAt: number
+        public createdAt?: number,
+        public id?: string,
     ) {}
 }

@@ -1,0 +1,65 @@
+<form [formGroup]="newOriginForm" (ngSubmit)="onSubmit()" style="margin-top: 20px;">
+    <mat-grid-list cols="12" gutterSize="20px">
+        <mat-grid-tile [colspan]="2">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="4">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Identificador</mat-label>
+                    <input 
+                        type="text" 
+                        matInput 
+                        maxlength="1"
+                        minlength="1"
+                        formControlName="identifierFormControl">
+                        <mat-error *ngIf="!newOriginForm.get('identifierFormControl').valid && newOriginForm.get('identifierFormControl').touched && newOriginForm.get('identifierFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="4">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Descripcion</mat-label>
+                    <input 
+                        type="text" 
+                        matInput 
+                        minlength="1"
+                        formControlName="descriptionFormControl">
+                        <mat-error *ngIf="!newOriginForm.get('descriptionFormControl').valid && newOriginForm.get('descriptionFormControl').touched && newOriginForm.get('descriptionFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="12" gutterSize="20px" style="margin-top: 20px;">
+        <mat-grid-tile [colspan]="8">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1">
+            <button 
+                type="button"
+                mat-button color="primary" 
+                style="min-height: 50px;"
+                (click)="onCancelClick()">
+                Cancelar                       
+            </button>
+        </mat-grid-tile>
+        
+        <mat-grid-tile [colspan]="1">
+            <button 
+                mat-raised-button color="primary" 
+                style="min-height: 50px; width: 100%;"
+                [disabled]="!newOriginForm.valid || loading"
+                [class.spinner]="loading">
+                Crear                            
+            </button>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</form>

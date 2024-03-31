@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Origin } from '../../../models/origin.model';
 import { AuthService } from '../../../login/auth.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 interface GetOriginsResponse {
@@ -45,6 +45,32 @@ export class OriginsService {
         this._originList.next(originList);
 
         return originList;
+      })
+    )
+  }
+
+  newOrigin (origin: Origin) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(user => {
+        return this.http.post<Origin>(environment.api_url + "/origins", {
+          identifier: origin.identifier,
+          description: origin.description
+        },{
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${user.token}`
+          })
+        })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        let message = "Error desconocido";
+
+        if (error.status == 409)
+          message = "El origen ya existe";
+        else
+          message = "Error del servidor";
+
+        return throwError(message);
       })
     )
   }

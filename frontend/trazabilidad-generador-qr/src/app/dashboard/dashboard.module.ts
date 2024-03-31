@@ -24,6 +24,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { BatchDetailComponent } from '../dashboard/sections/batchs/detail/batch-detail/batch-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OriginDetailComponent } from './sections/origins/origin-detail/origin-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     LogsComponent,
     UsersComponent,
     TitlebarComponent,
-    BatchDetailComponent
+    BatchDetailComponent,
+    OriginDetailComponent
   ],
   imports: [
     CommonModule,
