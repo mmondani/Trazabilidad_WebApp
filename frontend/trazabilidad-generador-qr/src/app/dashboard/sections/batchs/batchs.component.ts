@@ -71,7 +71,6 @@ export class BatchsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   newBatchClick() {
-    //this.router.navigate(["batchs/detail"])
   }
 
   downloadTxtClick(batch: Batch) {
