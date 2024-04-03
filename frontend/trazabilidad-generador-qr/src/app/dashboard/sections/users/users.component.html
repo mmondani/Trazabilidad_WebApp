@@ -49,7 +49,7 @@
                     </button>
 
                     <button 
-                        *ngIf="loginUserLevel === 'admin'"
+                        *ngIf="loginUserLevel === 'admin' && loginUserEmail !== row.email"
                         mat-icon-button 
                         matTooltip="Eliminar" 
                         color="warn" 

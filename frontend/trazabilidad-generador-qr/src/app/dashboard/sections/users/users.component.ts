@@ -9,7 +9,7 @@ import { AuthService } from '../../../login/auth.service';
 import { UsersService } from './users.service';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { AlertDialogService } from '../../../shared/alert-dialog/alert-dialog.service';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -34,7 +34,8 @@ export class UsersComponent implements OnInit, OnDestroy, AfterViewInit   {
     private userService: UsersService,
     private loadingService: LoadingService,
     private alertDialogService: AlertDialogService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -80,5 +81,48 @@ export class UsersComponent implements OnInit, OnDestroy, AfterViewInit   {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  editClick (user: User) {
+    this.router.navigate(['detail'],
+      {
+        relativeTo: this.route, 
+        queryParams: {
+          user: JSON.stringify(user)
+        }
+      });
+  }
+
+  deleteClick (user: User) {
+    this.alertDialogService.showDialog({
+      message: `¿Estás seguro que querés eliminar el usuario ${user.email}?`,
+      data: user,
+      yesText: "Eliminar",
+      yesStyle: "filled",
+      yesColor: "warn",
+      noEnable: true,
+      noText: "Cancelar",
+      noStyle: "basic",
+      noColor: "primary",
+      yesClick: this.yesDeleteOrigin.bind(this),
+      noClick: this.noDeleteOrigin.bind(this)
+    })
+  }
+
+  yesDeleteOrigin(user: User) {
+    this.alertDialogService.hideDialog();
+
+    this.loadingService.showLoading();
+    this.userService.deleteUser(user.id).subscribe(() => {
+      this.userService.getUsers().subscribe(() => {},);
+    },
+    () => {
+      this .loadingService.hideLoading();
+      console.log ("Error al eliminar el usuario: " + user.id)
+    })
+  }
+
+  noDeleteOrigin(origin) {
+    this.alertDialogService.hideDialog();
   }
 }
