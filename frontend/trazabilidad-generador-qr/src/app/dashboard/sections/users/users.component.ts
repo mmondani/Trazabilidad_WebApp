@@ -22,7 +22,8 @@ export class UsersComponent implements OnInit, OnDestroy, AfterViewInit   {
   dataSource: MatTableDataSource<User>;
   userServiceSub: Subscription;
   userList: User[];
-  loginUserLevel: string = 'admin';
+  loginUserLevel: string = "admin";
+  loginUserEmail: string = "";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -45,6 +46,7 @@ export class UsersComponent implements OnInit, OnDestroy, AfterViewInit   {
       take(1)
     ).subscribe(loginUser => {
       this.loginUserLevel = loginUser.level;
+      this.loginUserEmail = loginUser.email;
     });
 
     this.userServiceSub = this.userService.userList.subscribe(userList => {

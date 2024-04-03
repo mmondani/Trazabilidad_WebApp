@@ -41,7 +41,7 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row">
                     <button 
-                        *ngIf="loginUserLevel === 'admin'"
+                        *ngIf="loginUserLevel === 'admin' || loginUserEmail === row.email"
                         mat-icon-button 
                         matTooltip="Editar" 
                         (click)="editClick(row)">
