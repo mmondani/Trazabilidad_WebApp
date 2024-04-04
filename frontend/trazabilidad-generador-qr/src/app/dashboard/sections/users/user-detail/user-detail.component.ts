@@ -56,7 +56,7 @@ export class UserDetailComponent implements OnInit {
       this.userToEdit = JSON.parse(this.route.snapshot.queryParams['user']);
 
     this.newUserForm = new FormGroup({
-      'emailFormControl': new FormControl({value: this.userToEdit?.email, disabled: this.userToEdit? true : false }, [Validators.required]),
+      'emailFormControl': new FormControl({value: this.userToEdit?.email, disabled: this.userToEdit? true : false }, [Validators.required, Validators.email]),
       'passwordFormControl': new FormControl("", [Validators.required]),
       'levelFormControl': new FormControl({value: this.userToEdit?.level, disabled: this.loginUserLevel !== "admin"}, [Validators.required])
     });

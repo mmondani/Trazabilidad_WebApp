@@ -8,11 +8,16 @@
                 <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
                     <mat-label>Email</mat-label>
                     <input 
-                        type="text" 
+                        type="email" 
                         matInput 
-                        formControlName="emailFormControl">
+                        formControlName="emailFormControl"
+                        placeholder="email@x-28.com">
                         <mat-error *ngIf="!newUserForm.get('emailFormControl').valid && newUserForm.get('emailFormControl').touched && newUserForm.get('emailFormControl').errors['required']">
                             Campo requerido
+                        </mat-error>
+
+                        <mat-error *ngIf="!newUserForm.get('emailFormControl').valid && newUserForm.get('emailFormControl').touched && newUserForm.get('emailFormControl').errors['email']">
+                            Ingresá una dirección de email válida
                         </mat-error>
                 </mat-form-field>
             </div>
