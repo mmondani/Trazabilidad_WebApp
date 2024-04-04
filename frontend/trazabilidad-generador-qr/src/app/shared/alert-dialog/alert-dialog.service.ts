@@ -7,6 +7,7 @@ export interface AlertDialogConfig {
   noText?: string,
   yesText?: string,
   noEnable?: boolean,
+  yesEnable?: boolean,
   noStyle?: "basic" | "outline" | "filled",
   yesStyle?: "basic" | "outline" | "filled",
   noColor?: "" | "primary" | "accent" | "warn",

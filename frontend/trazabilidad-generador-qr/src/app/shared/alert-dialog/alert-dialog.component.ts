@@ -12,6 +12,7 @@ export class AlertDialogComponent {
   @Input() noText = "";
   @Input() yesText = "";
   @Input() noEnable = false;
+  @Input() yesEnable = true;
   @Input() noStyle: "basic" | "outline" | "filled" = "outline";
   @Input() yesStyle: "basic" | "outline" | "filled" = "outline";
   @Input() noColor: "" | "primary" | "accent" | "warn" = "";

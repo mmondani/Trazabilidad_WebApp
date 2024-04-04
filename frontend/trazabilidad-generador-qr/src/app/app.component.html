@@ -1,6 +1,6 @@
-<router-outlet></router-outlet>
+<router-outlet *ngIf="!showSizeMessage"></router-outlet>
 
-<app-loading *ngIf="showLoading"></app-loading>
+<app-loading *ngIf="showLoading && !showSizeMessage"></app-loading>
 
 <app-alert-dialog
     [title] = "dialogConfig.title"
@@ -15,5 +15,12 @@
     [data] = "dialogConfig.data"
     (no) = "dialogConfig.noClick($event)"
     (yes) = "dialogConfig.yesClick($event)"
-    *ngIf="dialogConfig.show">
+    *ngIf="dialogConfig.show && !showSizeMessage">
 </app-alert-dialog>
+
+<div *ngIf="showSizeMessage">
+    <div class="backdrop"></div>
+    <div class="dialog-box">
+        <p>Visualizá esta web en una computadora de escritorio. No  fue diseñada para dispositivos móviles.</p>
+    </div>
+</div>
