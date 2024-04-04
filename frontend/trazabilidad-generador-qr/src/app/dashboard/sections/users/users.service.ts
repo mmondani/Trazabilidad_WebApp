@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from '../../../models/user.model';
 import { AuthService } from '../../../login/auth.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, switchMap, take } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 interface GetUsersResponse {
@@ -48,6 +48,56 @@ export class UsersService {
         this._userList.next(userList);
 
         return userList;
+      })
+    )
+  }
+
+  newUser (user: User) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(loginUser => {
+        return this.http.post<User>(environment.api_url + "/users", {
+          email: user.email,
+          password: user.password,
+          level: user.level
+        },{
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${loginUser.token}`
+          })
+        })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        let message = "Error desconocido";
+
+        if (error.status == 409)
+          message = "El usuario ya existe";
+        else
+          message = "Error del servidor";
+
+        return throwError(message);
+      })
+    )
+  }
+
+  editOrigin (user: User) {
+    return this.auth.user.pipe(
+      take(1),
+      switchMap(loginUser => {
+        return this.http.patch<User>(environment.api_url + "/users", {
+          id: user.id,
+          email: user.email,
+          level: user.level,
+          password: user.password
+        },{
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${loginUser.token}`
+          })
+        })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        let message = "Error del servidor";
+
+        return throwError(message);
       })
     )
   }

@@ -25,6 +25,7 @@ import { SharedModule } from '../shared/shared.module';
 import { BatchDetailComponent } from '../dashboard/sections/batchs/detail/batch-detail/batch-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OriginDetailComponent } from './sections/origins/origin-detail/origin-detail.component';
+import { UserDetailComponent } from './sections/users/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { OriginDetailComponent } from './sections/origins/origin-detail/origin-d
     UsersComponent,
     TitlebarComponent,
     BatchDetailComponent,
-    OriginDetailComponent
+    OriginDetailComponent,
+    UserDetailComponent
   ],
   imports: [
     CommonModule,

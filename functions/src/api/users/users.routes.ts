@@ -25,7 +25,7 @@ export default (app: express.Express, db: Firestore) => {
 
     app.patch("/users", [
         usersMiddleware.isTokenValid,
-        usersMiddleware.isPermissionLevelFulfilled(["admin"]),
+        usersMiddleware.isPermissionLevelFulfilled(["admin", "operator"]),
         usersMiddleware.patchUserValidator,
         usersControllers.patchUser(db)
     ]);

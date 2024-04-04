@@ -8,6 +8,7 @@ import { LogsComponent } from './sections/logs/logs.component';
 import { UsersComponent } from './sections/users/users.component';
 import { BatchDetailComponent } from './sections/batchs/detail/batch-detail/batch-detail.component';
 import { OriginDetailComponent } from './sections/origins/origin-detail/origin-detail.component';
+import { UserDetailComponent } from './sections/users/user-detail/user-detail.component';
 
 const dashboardRoutes: Routes = [
   {
@@ -42,7 +43,11 @@ const dashboardRoutes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
-      }
+      },
+      {
+        path: 'users/detail',
+        component: UserDetailComponent
+      },
     ]
   }
 ]

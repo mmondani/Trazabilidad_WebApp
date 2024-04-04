@@ -1,0 +1,91 @@
+<form [formGroup]="newUserForm" (ngSubmit)="onSubmit()" style="margin-top: 20px;">
+    <mat-grid-list cols="12" gutterSize="20px">
+        <mat-grid-tile [colspan]="2">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="4">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Email</mat-label>
+                    <input 
+                        type="text" 
+                        matInput 
+                        formControlName="emailFormControl">
+                        <mat-error *ngIf="!newUserForm.get('emailFormControl').valid && newUserForm.get('emailFormControl').touched && newUserForm.get('emailFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="4">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 70px;">
+                    <mat-label>Password</mat-label>
+                    <input 
+                        type="password" 
+                        matInput 
+                        formControlName="passwordFormControl">
+                        <mat-error *ngIf="!newUserForm.get('passwordFormControl').valid && newUserForm.get('passwordFormControl').touched && newUserForm.get('passwordFormControl').errors['required']">
+                            Campo requerido
+                        </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="12" gutterSize="20px">
+        <mat-grid-tile [colspan]="2">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="4">
+            <div style="width: 100%; height: 100%; align-content: flex-end;">
+                <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>Nivel de privilegio</mat-label>
+                    <mat-select formControlName="levelFormControl">
+                        <mat-option *ngFor="let level of levels" value="{{level.value}}">{{level.description}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!newUserForm.get('levelFormControl').valid && newUserForm.get('levelFormControl').touched && newUserForm.get('levelFormControl').errors['required']">
+                        Campo requerido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="12" gutterSize="20px" style="margin-top: 20px;">
+        <mat-grid-tile [colspan]="8">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1">
+            <button 
+                type="button"
+                mat-button color="primary" 
+                style="min-height: 50px;"
+                (click)="onCancelClick()">
+                Cancelar                       
+            </button>
+        </mat-grid-tile>
+        
+        <mat-grid-tile [colspan]="1">
+            <button 
+                *ngIf="!userToEdit"
+                mat-raised-button color="primary" 
+                style="min-height: 50px; width: 100%;"
+                [disabled]="!newUserForm.valid || loading"
+                [class.spinner]="loading">
+                Crear                            
+            </button>
+
+            <button 
+                *ngIf="userToEdit"
+                mat-raised-button color="primary" 
+                style="min-height: 50px; width: 100%;"
+                [disabled]="!newUserForm.valid || loading"
+                [class.spinner]="loading">
+                Editar                            
+            </button>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</form>

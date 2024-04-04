@@ -46,7 +46,11 @@ export class OriginDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.titlebarService.title = "Crear nuevo origen";
+    if (this.originToEdit)
+      this.titlebarService.title = "Editar origen";
+    else
+      this.titlebarService.title = "Crear nuevo origen";
+
     this.titlebarService.back = true;
   }
 
