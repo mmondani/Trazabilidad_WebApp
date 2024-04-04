@@ -88,6 +88,10 @@
                         <mat-error *ngIf="!newBatchForm.get('fromFormControl').valid && newBatchForm.get('fromFormControl').touched && newBatchForm.get('fromFormControl').errors['max']">
                             Valor máximo {{newBatchForm.get('fromFormControl').errors['max'].max}}
                         </mat-error>
+
+                        <mat-error *ngIf="!newBatchForm.get('fromFormControl').valid && newBatchForm.get('fromFormControl').touched && newBatchForm.get('fromFormControl').errors['fromToDifference']">
+                            Desde no puede ser mayor que Hasta
+                        </mat-error>
                 </mat-form-field>
             </div>
         </mat-grid-tile>

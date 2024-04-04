@@ -10,8 +10,9 @@ import { getCurrentWeekNumber } from '../../../../../shared/utilities';
 import { BatchsService } from '../../batchs.service';
 import { Batch } from '../../../../../models/batch.model';
 import { AlertDialogService } from '../../../../../shared/alert-dialog/alert-dialog.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { downloadTxt } from '../../downloadTxt';
+import { AuthService } from '../../../../../login/auth.service';
 
 @Component({
   selector: 'app-batch-detail',
@@ -21,10 +22,13 @@ import { downloadTxt } from '../../downloadTxt';
 export class BatchDetailComponent implements OnInit {
   newBatchForm: FormGroup;
   origins: Origin[];
+  loginUserLevel: string = "admin";
+  minValidator = Validators.min(1);
   loading = false;
 
 
   constructor(
+    private auth: AuthService,
     private titlebarService: TitlebarService,
     private http: HttpClient,
     private location: Location,
@@ -53,7 +57,7 @@ export class BatchDetailComponent implements OnInit {
       'originFormControl': new FormControl(null,[Validators.required]),
       'weekFormControl': new FormControl(currentWeek, [Validators.required, Validators.min(1), Validators.max(60)]),
       'yearFormControl': new FormControl(currentYear, [Validators.required, Validators.min(2024), Validators.max(2099)]),
-      'fromFormControl': new FormControl(1, [Validators.required, Validators.min(1), Validators.max(99999)]),
+      'fromFormControl': new FormControl(1, [Validators.required, this.minValidator, Validators.max(99999)]),
       'toFormControl': new FormControl(1, [Validators.required, Validators.min(1), Validators.max(99999)]),
       'quantityFormControl': new FormControl(1, [Validators.required, Validators.min(1), Validators.max(99999)])
     })
@@ -62,6 +66,9 @@ export class BatchDetailComponent implements OnInit {
       debounceTime(500),
       distinctUntilChanged()
     ).subscribe(value => {
+      if (this.newBatchForm.value.fromFormControl > this.newBatchForm.value.toFormControl)
+        this.newBatchForm.controls.toFormControl.setValue(this.newBatchForm.value.fromFormControl);
+
       this.newBatchForm.controls.quantityFormControl.setValue(this.newBatchForm.value.toFormControl - this.newBatchForm.value.fromFormControl + 1)
     })
 
@@ -69,6 +76,9 @@ export class BatchDetailComponent implements OnInit {
       debounceTime(500),
       distinctUntilChanged()
     ).subscribe(value => {
+      if (this.newBatchForm.value.fromFormControl > this.newBatchForm.value.toFormControl)
+        this.newBatchForm.controls.fromFormControl.setValue(this.newBatchForm.value.toFormControl);
+
       this.newBatchForm.controls.quantityFormControl.setValue(this.newBatchForm.value.toFormControl - this.newBatchForm.value.fromFormControl + 1)
     })
 
@@ -107,6 +117,18 @@ export class BatchDetailComponent implements OnInit {
         this.loadingService.hideLoading();
         this.newBatchForm.controls.fromFormControl.setValue(nextFrom);
         this.newBatchForm.controls.toFormControl.setValue(nextFrom);
+
+        // Si el nivel de privilegio del usuario es operator, no puede cargar un from más bajo que el informado
+        // por la API
+        if (this.loginUserLevel === "operator") {
+          this.newBatchForm.controls.fromFormControl.removeValidators(this.minValidator);
+
+          this.minValidator = Validators.min(nextFrom);
+
+          this.newBatchForm.controls.fromFormControl.addValidators(this.minValidator);
+
+          this.newBatchForm.controls.fromFormControl.updateValueAndValidity();
+        }
       },
       () => {
         this.loadingService.hideLoading();
@@ -117,6 +139,13 @@ export class BatchDetailComponent implements OnInit {
   ngOnInit(): void {
     this.titlebarService.title = "Crear nuevo lote";
     this.titlebarService.back = true;
+
+    // Se busca el nivel de privilegio del usuario logueado
+    this.auth.user.pipe(
+      take(1)
+    ).subscribe(loginUser => {
+      this.loginUserLevel = loginUser.level;
+    });
   }
 
   onSubmit() {
