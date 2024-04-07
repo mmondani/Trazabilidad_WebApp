@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../../models/user.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { TitlebarService } from '../../../titlebar/titlebar.service';
 import { UsersService } from '../users.service';
 import { AlertDialogService } from '../../../../shared/alert-dialog/alert-dialog.service';
@@ -55,9 +55,15 @@ export class UserDetailComponent implements OnInit {
     if (this.route.snapshot.queryParams['user'])
       this.userToEdit = JSON.parse(this.route.snapshot.queryParams['user']);
 
+    let passwordValidators: ValidatorFn[] = [];
+    if (this.userToEdit)
+      passwordValidators = [Validators.minLength(8)];
+    else
+      passwordValidators = [Validators.required, Validators.minLength(8)]
+
     this.newUserForm = new FormGroup({
       'emailFormControl': new FormControl({value: this.userToEdit?.email, disabled: this.userToEdit? true : false }, [Validators.required, Validators.email]),
-      'passwordFormControl': new FormControl("", [Validators.required]),
+      'passwordFormControl': new FormControl("", passwordValidators),
       'levelFormControl': new FormControl({value: this.userToEdit?.level, disabled: this.loginUserLevel !== "admin"}, [Validators.required])
     });
   }

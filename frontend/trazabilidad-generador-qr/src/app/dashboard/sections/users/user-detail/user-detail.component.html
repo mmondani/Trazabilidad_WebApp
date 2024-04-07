@@ -34,6 +34,9 @@
                         <mat-error *ngIf="!newUserForm.get('passwordFormControl').valid && newUserForm.get('passwordFormControl').touched && newUserForm.get('passwordFormControl').errors['required']">
                             Campo requerido
                         </mat-error>
+                        <mat-error *ngIf="!newUserForm.get('passwordFormControl').valid && newUserForm.get('passwordFormControl').touched && newUserForm.get('passwordFormControl').errors['minlength']">
+                            Debe tener al menos 8 caracteres
+                        </mat-error>
                 </mat-form-field>
             </div>
         </mat-grid-tile>
