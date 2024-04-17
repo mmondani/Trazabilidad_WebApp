@@ -6,5 +6,5 @@ export const getCurrentWeekNumber = () => {
     
     let weekNumber = Math.ceil(days / 7);
 
-    return weekNumber + 1;
+    return weekNumber;
 }
